@@ -5,8 +5,8 @@ node_modules/
 out/
 dist/
 
-# VS Code extension package
-*.vsix
+# VS Code extension package (allow releases)
+# *.vsix
 
 # TypeScript cache
 *.tsbuildinfo
