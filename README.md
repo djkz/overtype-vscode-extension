@@ -64,37 +64,77 @@ Access settings via VS Code's settings UI or `settings.json`:
 
 ## Installation
 
-### From VSIX (Local Development)
+### Option 1: Download Pre-built Extension (Recommended)
 
-1. Clone this repository
-2. Run `npm install` in the extension directory
-3. Run `npm run vscode:prepublish` to build
-4. Press `F5` to run the extension in a new Extension Development Host window
+1. Download `overtype-markdown-viewer-0.1.1.vsix` from this repository
+2. In VS Code, press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac)
+3. Type "Extensions: Install from VSIX..."
+4. Select the downloaded .vsix file
+5. Restart VS Code
 
-### From VS Code Marketplace
+### Option 2: Build from Source
+
+1. Follow the [Development](#development) section to build the extension
+2. Install the generated .vsix file as described above
+
+### Option 3: VS Code Marketplace
 
 *Coming soon - extension will be published to the marketplace*
 
 ## Development
 
-### Building the Extension
+### Prerequisites
 
-```bash
-# Install dependencies
-npm install
+This extension requires the original OverType library to be built first. The recommended setup is:
 
-# Compile TypeScript
-npm run compile
-
-# Bundle OverType library
-npm run bundle-overtype
-
-# Build everything (prepublish script)
-npm run vscode:prepublish
-
-# Package the extension
-npm run package
 ```
+project-folder/
+├── overtype/                    # Original OverType library
+└── overtype-vscode-extension/   # This VS Code extension
+```
+
+### Setup Instructions
+
+1. **Clone the original OverType library:**
+   ```bash
+   git clone https://github.com/panphora/overtype.git
+   cd overtype
+   npm install
+   npm run build  # Creates dist/overtype.min.js
+   ```
+
+2. **Clone this extension in a sibling directory:**
+   ```bash
+   cd ..
+   git clone https://github.com/djkz/overtype-vscode-extension.git
+   cd overtype-vscode-extension
+   ```
+
+3. **Build the extension:**
+   ```bash
+   # Install dependencies
+   npm install
+
+   # Bundle OverType library (copies from ../overtype/dist/)
+   npm run bundle-overtype
+
+   # Compile TypeScript
+   npm run compile
+
+   # Package the extension
+   npm run package
+   ```
+
+### Build Scripts Explained
+
+- `npm run bundle-overtype` - Copies `overtype.min.js` from the original library's `dist/` folder
+- `npm run compile` - Compiles TypeScript source to JavaScript
+- `npm run vscode:prepublish` - Runs both bundle and compile steps
+- `npm run package` - Creates the .vsix file for installation
+
+### Alternative: Using Pre-built Package
+
+If you don't want to build from source, download the pre-built `.vsix` file from the [GitHub releases](https://github.com/djkz/overtype-vscode-extension/releases) and install it directly in VS Code.
 
 ### Project Structure
 
